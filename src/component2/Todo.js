@@ -1,30 +1,33 @@
-import React, { useContext, useState ,useEffect} from 'react'
-import { dataContext } from './Context'
-import axios from 'axios';
+import React, { useContext, useState, useEffect } from "react";
+import { dataContext } from "./Context";
+import axios from "axios";
+import Card from 'react-bootstrap/Card';
+import { Container } from "react-bootstrap";
+
 function Todo() {
+  const { loginData } = useContext(dataContext);
+  const [todoShow, setTodoShow] = useState([]);
 
-    const{loginData} = useContext(dataContext);
-    const[todoShow,setTodoShow] = useState([]);
-
-    useEffect(() => {
-        (async () => {
-          const post2=await axios.get(`https://jsonplaceholder.typicode.com/todos?userId=${loginData.id}`)
-          setTodoShow(post2.data)
-    
-        })()
-    
-    
-      },[])
+  useEffect(() => {
+    (async () => {
+      const post2 = await axios.get(
+        `https://jsonplaceholder.typicode.com/todos?userId=${loginData.id}`
+      );
+      setTodoShow(post2.data);
+    })();
+  }, []);
   return (
     <div>
-       {todoShow.map(post=>
-            <ul>
-                <li >Title : {post.title}</li>
-                <li >Completed : {post.completed}</li> 
-            </ul>
-        )}
+      <Container>
+
+      {todoShow.map((post) => (
+        <Card>
+         <Card.Body>{post.title}</Card.Body>
+       </Card>
+      ))}
+      </Container>
     </div>
-  )
+  );
 }
 
-export default Todo
+export default Todo;

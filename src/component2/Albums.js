@@ -2,6 +2,11 @@ import React, { useContext, useState,useEffect } from 'react'
 import { dataContext } from './Context'
 import axios from 'axios'
 import {  useNavigate } from 'react-router-dom'
+import { Container} from 'react-bootstrap';
+import Card from 'react-bootstrap/Card';
+import Button from "react-bootstrap/Button";
+
+
 function Albums() {
   const {loginData} = useContext(dataContext)
   const[albumshow,setAlbumShow] = useState([])
@@ -26,19 +31,24 @@ function Albums() {
 
   },[])
   return (
-    <div>
+    <div className="my-3">
+      <Container>
+
       <div>
-        <h2>Album Details of {loginData.username}</h2>
+        <h1>Album Details of {loginData.username}</h1>
       </div>
+        <div className="my-3" >
+
        {albumshow.map(post=>
-            <ul>
-                <li >Title:- {post.title}</li>
-                
-            </ul>
+               <Card>
+               <Card.Body>{post.title}</Card.Body>
+             </Card>
         )}
-        <div>
-          <button onClick={()=>navigate('/photos')} > Photos{photo}</button>
+        
+          <Button onClick={()=>navigate('/photos')} > Photos- {photo}</Button>
         </div>
+        
+        </Container>
     </div>
   )
 }
