@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { dataContext } from "./Context";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
+import SingOut from "./SingOut";
 
 function Users() {
   const { loginData } = useContext(dataContext);
@@ -35,9 +36,10 @@ function Users() {
       }
     })();
   }, [loginData]);
-
+  
   return (
     <div className="container">
+      <SingOut/>
       <h2>Welcome {loginData.username}</h2>
       <div className="my-5">
         <Button

@@ -7,10 +7,12 @@ import Albums from "./component2/Albums";
 import Posts from "./component2/Posts";
 import Login from "./component2/Login";
 import Comment from "./component2/Comment";
+import Home from "./component2/Home";
 // export const userContext = React.createContext()
 // export const nameContext = React.createContext()
  import  { dataContext } from "./component2/Context";
 import Todo from "./component2/Todo";
+import PrivateRoutes from "./PrivateRoutes";
 
 function App() {
 
@@ -35,13 +37,17 @@ function App() {
       <Router>  
 
         <Routes>
-          <Route  path="/login" element={<Login/>}/>
+          <Route element = {<PrivateRoutes/>} >
+
           <Route  path="/users" element={<Users/>}/>
           <Route  path="/posts" element={<Posts/>}/>
           <Route  path="/photos" element={<Photos/>}/>
           <Route  path="/albums" element={<Albums/>}/>
           <Route  path="/todos" element={<Todo/>}/>
           <Route  path="/comments" element={<Comment/>}/>
+          </Route>
+          <Route  path="/" element={<Home/>}/>
+          <Route  path="/login" element={<Login/>}/>
           </Routes>
       </Router>
     </dataContext.Provider>

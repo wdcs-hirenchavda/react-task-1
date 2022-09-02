@@ -5,23 +5,24 @@ import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { Col, Container, Row } from 'react-bootstrap';
+import SingOut from './SingOut';
 function Posts() {
   const {loginData} = useContext(dataContext)
-  const [postshow,setPostShow] = useState([]);
   const [comment,setComment] = useState([]);
+  const[resp, setResp] = useState([]);
 const navigate = useNavigate();
   useEffect(() => {
     (async () => {
-      const post2= await axios.get(`https://jsonplaceholder.typicode.com/posts?userId=${loginData.id}`)
-      setPostShow(post2.data)
-
-      const po = await axios.get(`https://jsonplaceholder.typicode.com/comments?postId=${loginData.id}`) 
-      setComment(po.data.length)
+      const result = await axios.get(`https://jsonplaceholder.typicode.com/posts?userId=${loginData.id}`)
+      setComment(result.data)
+            Promise.all(result.data.map(r=> axios.get(`https://jsonplaceholder.typicode.com/comments?postId=${r.id}`).then(res =>{setResp(res.data.length) }))
+            )
+      
 
     })()
 
 
-  },[])
+  },[loginData])
 
   
 
@@ -30,13 +31,14 @@ const navigate = useNavigate();
   return (
     
     <div className="my-3" >
+      <SingOut/>
       <div>
       </div>
       <Container>
         <h1>Post Details of {loginData.username}</h1>
         <Row>
 
-      {postshow.map(post=>
+      {comment.map(post=>
       <Col>
             <Card style={{ width: '18rem',marginTop: '3rem' }}>
               
@@ -45,7 +47,7 @@ const navigate = useNavigate();
               <Card.Text>
                Body: {post.body}
               </Card.Text>
-              <Button variant="primary" onClick={()=>navigate('/comments')} >Comments - {comment}</Button>
+          <Button variant="primary" onClick={()=>navigate(`/comments?postId=${post.id}`)} >Comments - {resp}</Button>
             </Card.Body>
           </Card>
       </Col>

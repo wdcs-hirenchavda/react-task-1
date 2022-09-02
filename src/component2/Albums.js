@@ -5,6 +5,7 @@ import {  useNavigate } from 'react-router-dom'
 import { Container} from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
 import Button from "react-bootstrap/Button";
+import SingOut from './SingOut';
 
 
 function Albums() {
@@ -21,17 +22,17 @@ function Albums() {
 
       const pos32=await axios.get(`https://jsonplaceholder.typicode.com/photos?albumId=${loginData.id}`)
       setPhoto(pos32.data.length)
-      // {albumshow.map(post=>
-      //   op = axios.get(`https://jsonplaceholder.typicode.com/photos?=${post.id}`)
+
         
 
       
     })()
 
 
-  },[])
+  },[loginData])
   return (
     <div className="my-3">
+      <SingOut/>
       <Container>
 
       <div>
@@ -42,10 +43,10 @@ function Albums() {
        {albumshow.map(post=>
                <Card>
                <Card.Body>{post.title}</Card.Body>
+               <Button onClick={()=>navigate(`/photos?albumId=${post.id}`)} > Photos- {photo}</Button>
              </Card>
         )}
         
-          <Button onClick={()=>navigate('/photos')} > Photos- {photo}</Button>
         </div>
         
         </Container>

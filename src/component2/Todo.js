@@ -3,6 +3,7 @@ import { dataContext } from "./Context";
 import axios from "axios";
 import Card from 'react-bootstrap/Card';
 import { Container } from "react-bootstrap";
+import SingOut from "./SingOut";
 
 function Todo() {
   const { loginData } = useContext(dataContext);
@@ -15,9 +16,10 @@ function Todo() {
       );
       setTodoShow(post2.data);
     })();
-  }, []);
+  }, [loginData]);
   return (
     <div>
+      <SingOut/>
       <Container>
 
       {todoShow.map((post) => (
